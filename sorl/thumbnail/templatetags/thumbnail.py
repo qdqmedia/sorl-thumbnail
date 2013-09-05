@@ -2,6 +2,7 @@ import logging
 import re
 import sys
 from django.template import Library, Node, NodeList, TemplateSyntaxError
+from django.utils import six
 from django.utils.encoding import smart_str
 from functools import wraps
 from sorl.thumbnail.conf import settings
@@ -85,7 +86,7 @@ class ThumbnailNode(ThumbnailNodeBase):
         options = {}
         for key, expr in self.options:
             noresolve = {u'True': True, u'False': False, u'None': None}
-            value = noresolve.get(unicode(expr), expr.resolve(context))
+            value = noresolve.get(six.text_type(expr), expr.resolve(context))
             if key == 'options':
                 options.update(value)
             else:

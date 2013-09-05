@@ -5,7 +5,7 @@ from sorl.thumbnail.conf import settings
 
 class KVStore(KVStoreBase):
     def __init__(self, *args, **kwargs):
-        super(KVStore, self).__init__(*args, **kwargs)
+        super(KVStore, self).__init__(*args, **kwargs) #TODO: Unexpected argument
         self.connection = Redis(
             host=settings.THUMBNAIL_REDIS_HOST,
             port=settings.THUMBNAIL_REDIS_PORT,

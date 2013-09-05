@@ -1,4 +1,8 @@
-from cStringIO import StringIO
+try:
+    from io import StringIO
+except:
+    #python2
+    from cStringIO import StringIO
 from sorl.thumbnail.engines.base import EngineBase
 
 try:

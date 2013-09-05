@@ -1,6 +1,6 @@
-'''
+"""
 Wand (>=v0.3.0) engine for Sorl-thumbnail
-'''
+"""
 
 from wand.image import Image
 from sorl.thumbnail.engines.base import EngineBase

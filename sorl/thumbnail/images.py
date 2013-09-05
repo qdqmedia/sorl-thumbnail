@@ -1,18 +1,23 @@
 import re
-import urllib2
+#import urllib2
+try:
+    from urllib.error import URLError
+    from urllib.request import urlopen
+except:
+    #For python2
+    from urllib2 import URLError, urlopen
 from django.core.files.base import File, ContentFile
 from django.core.files.storage import Storage, default_storage
-from django.core.urlresolvers import reverse
 from django.utils.encoding import force_unicode
 from django.utils.functional import LazyObject
-from django.utils import simplejson
 from sorl.thumbnail.conf import settings
 from sorl.thumbnail.helpers import ThumbnailError, tokey, get_module_class
 from sorl.thumbnail import default
 from sorl.thumbnail.parsers import parse_geometry
+import json
 
 
-url_pat = re.compile(r'^(https?|ftp):\/\/')
+url_pat = re.compile(r'^(https?|ftp)://')
 
 
 def serialize_image_file(image_file):
@@ -24,11 +29,11 @@ def serialize_image_file(image_file):
         'storage': image_file.serialize_storage(),
         'size': image_file.size,
     }
-    return simplejson.dumps(data)
+    return json.dumps(data)
 
 
 def deserialize_image_file(s):
-    data = simplejson.loads(s)
+    data = json.loads(s)
     class LazyStorage(LazyObject):
         def _setup(self):
             self._wrapped = get_module_class(data['storage'])()
@@ -166,12 +171,12 @@ class DummyImageFile(BaseImageFile):
 
 class UrlStorage(Storage):
     def open(self, name):
-        return urllib2.urlopen(name)
+        return urlopen(name)
 
     def exists(self, name):
         try:
             self.open(name)
-        except urllib2.URLError:
+        except URLError:
             return False
         return True
 

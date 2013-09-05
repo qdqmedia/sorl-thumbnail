@@ -12,7 +12,7 @@ __all__ = ('ImageField', 'ImageFormField')
 class ImageField(models.FileField):
     def delete_file(self, instance, sender, **kwargs):
         """
-        Adds deletion of thumbnails and key kalue store references to the
+        Adds deletion of thumbnails and key value store references to the
         parent class implementation. Only called in Django < 1.2.5
         """
         file_ = getattr(instance, self.attname)

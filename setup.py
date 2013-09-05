@@ -32,6 +32,6 @@ setup(
         'Topic :: Multimedia :: Graphics',
         'Framework :: Django',
     ],
-    cmdclass={"test": TestCommand},
+    cmdclass={"test": TestCommand}, requires=['django'],
 )
 
